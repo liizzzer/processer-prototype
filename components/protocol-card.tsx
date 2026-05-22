@@ -21,7 +21,7 @@ export function ProtocolCard({ id, title, version, date, status, description }: 
   return (
     <Link href={`/protocols/${id}`} className="block group">
       <Card className="bg-card shadow-none ring-0 h-full transition-shadow group-hover:shadow-md">
-        <CardContent className="p-4 flex flex-col gap-3">
+        <CardContent className="px-4 flex flex-col gap-3">
           <div className="flex items-start justify-between">
             <Badge className="bg-orange-500 hover:bg-orange-500 text-white text-xs font-medium gap-1.5 px-2.5 py-1 rounded-full">
               <Loader2 className="h-3 w-3 animate-spin" />
