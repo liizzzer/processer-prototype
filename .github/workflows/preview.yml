@@ -15,7 +15,14 @@ jobs:
         run: npm install -g vercel@latest
 
       - name: Deploy to Vercel Preview
-        run: vercel deploy --token=${{ secrets.VERCEL_TOKEN }}
+        id: deploy
+        run: echo "url=$(vercel deploy --token=${{ secrets.VERCEL_TOKEN }})" >> $GITHUB_OUTPUT
+        env:
+          VERCEL_ORG_ID: team_LZ88Jcf7Fe4NwjFLKTWImRLN
+          VERCEL_PROJECT_ID: prj_DrCSb5cWRFYknljbSK4amLU0CKEW
+
+      - name: Assign stable dev alias
+        run: vercel alias set ${{ steps.deploy.outputs.url }} processer-prototype-dev.vercel.app --token=${{ secrets.VERCEL_TOKEN }}
         env:
           VERCEL_ORG_ID: team_LZ88Jcf7Fe4NwjFLKTWImRLN
           VERCEL_PROJECT_ID: prj_DrCSb5cWRFYknljbSK4amLU0CKEW
