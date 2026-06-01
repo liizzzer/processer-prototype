@@ -1,8 +1,7 @@
 import {
   SquareTerminal,
   TrendingUp,
-  FilePlus,
-  Clock,
+Clock,
   BookOpen,
   GitBranch,
   LifeBuoy,
@@ -13,12 +12,8 @@ import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
 const navItems = [
-  { icon: SquareTerminal, label: "Start" },
-  { icon: TrendingUp, label: "Improvement opportunities" },
-  { icon: FilePlus, label: "New protocol" },
-  { icon: Clock, label: "Activity Log" },
-  { icon: BookOpen, label: "Analytics" },
-  { icon: GitBranch, label: "Status" },
+  { icon: SquareTerminal, label: "Protocols", href: "/" },
+  { icon: Clock, label: "Activity Log", href: "#" },
 ]
 
 interface AppSidebarProps {
@@ -43,19 +38,20 @@ export function AppSidebar({ activeItem = "Start" }: AppSidebarProps) {
       {/* Nav */}
       <nav className="flex-1 flex flex-col gap-0.5">
         {navItems.map((item) => (
-          <Button
-            key={item.label}
-            variant="ghost"
-            className={cn(
-              "w-full justify-start gap-3 px-3 py-2 h-auto text-sm font-normal rounded-lg",
-              item.label === activeItem
-                ? "bg-sidebar-primary text-sidebar-primary-foreground hover:bg-sidebar-primary hover:text-sidebar-primary-foreground"
-                : "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-foreground"
-            )}
-          >
-            <item.icon className="h-4 w-4 shrink-0" />
-            {item.label}
-          </Button>
+          <Link key={item.label} href={item.href}>
+            <Button
+              variant="ghost"
+              className={cn(
+                "w-full justify-start gap-3 px-3 py-2 h-auto text-sm font-normal rounded-lg",
+                item.label === activeItem
+                  ? "bg-sidebar-primary text-sidebar-primary-foreground hover:bg-sidebar-primary hover:text-sidebar-primary-foreground"
+                  : "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-foreground"
+              )}
+            >
+              <item.icon className="h-4 w-4 shrink-0" />
+              {item.label}
+            </Button>
+          </Link>
         ))}
       </nav>
 

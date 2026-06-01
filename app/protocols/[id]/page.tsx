@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import Link from "next/link"
 import {
   PanelLeft,
@@ -21,6 +22,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { AppSidebar } from "@/components/app-sidebar"
+import { DiagramCanvas } from "@/components/diagram-canvas"
 
 const protocol = {
   title: "Buying a product",
@@ -32,7 +34,7 @@ const protocol = {
     "Make the things done. The purpose of this Code is to establish rules of business conduct and guiding principles for all directors, relevant principals, and employees of Makarenko Limited.",
 }
 
-const activities = [
+const initialActivities = [
   {
     id: 1,
     title: "Compile CAPEX",
@@ -118,6 +120,9 @@ function PersonCard({ name, role }: { name: string; role: string }) {
 }
 
 export default function ProtocolViewPage() {
+  const [activeTab, setActiveTab] = useState("details")
+  const [activities, setActivities] = useState(initialActivities)
+
   return (
     <div className="flex h-screen bg-sidebar overflow-hidden">
       <AppSidebar activeItem="New protocol" />
@@ -165,7 +170,7 @@ export default function ProtocolViewPage() {
         </div>
 
         {/* Tabs */}
-        <Tabs defaultValue="details" className="flex-1 flex flex-col overflow-hidden px-5 pt-4">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col overflow-hidden px-5 pt-4">
           <TabsList className="shrink-0 w-full">
             {["details", "people", "raci", "diagram", "changes"].map((tab) => (
               <TabsTrigger
@@ -198,7 +203,7 @@ export default function ProtocolViewPage() {
                 <div className="px-6 pt-6 pb-6">
                 <div className="flex items-center justify-between mb-5">
                   <h2 className="text-xl font-bold text-foreground">Expected activities</h2>
-                  <Button variant="outline" size="sm" className="gap-1.5 text-xs">
+                  <Button variant="outline" size="sm" className="gap-1.5 text-xs" onClick={() => setActiveTab("diagram")}>
                     <Share2 className="h-3.5 w-3.5" />
                     Open in diagram
                   </Button>
@@ -337,10 +342,14 @@ export default function ProtocolViewPage() {
           </TabsContent>
 
           {/* Diagram */}
-          <TabsContent value="diagram" className="flex-1 overflow-auto mt-4 pb-6">
-            <Card className="bg-card shadow-none border-border h-full min-h-80 flex items-center justify-center">
-              <p className="text-muted-foreground text-sm">Diagram — coming soon</p>
-            </Card>
+          <TabsContent value="diagram" className="flex-1 mt-4 pb-6 overflow-hidden">
+            <div className="h-full min-h-[500px]">
+              <DiagramCanvas
+                activities={activities}
+                setActivities={setActivities}
+                onClose={() => setActiveTab("details")}
+              />
+            </div>
           </TabsContent>
 
           {/* Changes */}

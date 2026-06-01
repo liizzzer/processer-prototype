@@ -6,6 +6,7 @@ import {
   Search,
   ListFilter,
 } from "lucide-react"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { AppSidebar } from "@/components/app-sidebar"
@@ -26,7 +27,7 @@ const protocols = Array(6)
 export default function Page() {
   return (
     <div className="flex h-screen bg-sidebar overflow-hidden">
-      <AppSidebar activeItem="Start" />
+      <AppSidebar activeItem="Protocols" />
 
       {/* ─── Main panel ─── */}
       <main className="flex-1 m-2 rounded-xl bg-background overflow-auto flex flex-col">
@@ -41,10 +42,12 @@ export default function Page() {
               John Pork
               <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
             </Button>
-            <Button className="gap-2 text-sm" size="sm">
-              <FilePlus2 className="h-4 w-4" />
-              New protocol
-            </Button>
+            <Link href="/protocols/new">
+              <Button className="gap-2 text-sm" size="sm">
+                <FilePlus2 className="h-4 w-4" />
+                New protocol
+              </Button>
+            </Link>
           </div>
         </div>
 
