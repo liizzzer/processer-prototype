@@ -1,0 +1,28 @@
+name: Vercel Preview (dev)
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Vercel CLI
+        run: npm install -g vercel@latest
+
+      - name: Deploy to Vercel Preview
+        id: deploy
+        run: echo "url=$(vercel deploy --token=${{ secrets.VERCEL_TOKEN }})" >> $GITHUB_OUTPUT
+        env:
+          VERCEL_ORG_ID: team_LZ88Jcf7Fe4NwjFLKTWImRLN
+          VERCEL_PROJECT_ID: prj_DrCSb5cWRFYknljbSK4amLU0CKEW
+
+      - name: Assign stable dev alias
+        run: vercel alias set ${{ steps.deploy.outputs.url }} processer-prototype-dev.vercel.app --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: team_LZ88Jcf7Fe4NwjFLKTWImRLN
+          VERCEL_PROJECT_ID: prj_DrCSb5cWRFYknljbSK4amLU0CKEW
